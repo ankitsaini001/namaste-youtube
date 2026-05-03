@@ -6,8 +6,12 @@ function App() {
   return (
     <div>
       <Header />
-      <SiderBar />
-      <Body />
+      <div className="flex pt-14">
+        <SiderBar />
+        <div className="ml-56 flex-1">
+          <Body />
+        </div>
+      </div>
     </div>
   );
 }
