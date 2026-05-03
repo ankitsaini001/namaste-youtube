@@ -1,4 +1,16 @@
+import { use } from "react";
+import { useSelector } from "react-redux";
+
 const SiderBar = () => {
+
+    const sidebarItems = useSelector((store) => store.app.isMenuOpen);
+    
+    // Early return if sidebarItems is not available
+    if (!sidebarItems) {
+        return null; // or a loading indicator
+    }
+
+    
   return (
     <div className="w-56 h-[calc(100vh-56px)] overflow-y-auto fixed top-14 left-0 bg-white px-2 py-3">
       {/* Main Links */}
