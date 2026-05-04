@@ -1,4 +1,3 @@
-import { use } from "react";
 import { useSelector } from "react-redux";
 
 const SiderBar = () => {
@@ -12,7 +11,7 @@ const SiderBar = () => {
 
     
   return (
-    <div className="w-56 h-[calc(100vh-56px)] overflow-y-auto fixed top-14 left-0 bg-white px-2 py-3">
+    <div className="w-56 h-[calc(100vh-56px)] overflow-y-auto fixed top-14 left-0 bg-white px-2 py-3 z-50">
       {/* Main Links */}
       <div className="border-b border-gray-200 pb-3 mb-3">
         <SidebarItem icon="🏠" label="Home" active />

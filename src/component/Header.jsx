@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { SIDE_MENU_BAR, USER_ICON, YOUTUBE_LOGO } from "../utils/content";
+import { SIDE_MENU_BAR, USER_ICON, YOUTUBE_LOGO } from "../utils/constant";
 import { toggleEvent } from "../utils/appSlice";
 
 const Header = () => {
