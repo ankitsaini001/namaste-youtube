@@ -22,6 +22,8 @@ const timeAgo = (date) => {
 };
 
 const VideoCards = ({ video }) => {
+    console.log(video);
+    
   const { title, channelTitle, thumbnails, publishedAt } = video.snippet;
   const { viewCount } = video.statistics;
   return (

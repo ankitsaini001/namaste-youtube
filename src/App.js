@@ -6,6 +6,7 @@ import SiderBar from "./component/SiderBar";
 import store from "./utils/store";
 import NotFound from "./component/NotFound";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
+import Watch from "./component/Watch";
 
 function AppLayout() {
   const isMenuOpen = useSelector((store) => store.app.isMenuOpen);
@@ -34,6 +35,10 @@ const appRouter = createBrowserRouter([
       {
         path: "/",
         element: <Body />,
+      },
+      {
+        path: "/watch",
+        element: <Watch />,
       },
     ],
   },
