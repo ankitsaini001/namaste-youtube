@@ -6,3 +6,5 @@ export const USER_ICON = "https://www.svgrepo.com/show/382106/male-avatar-boy-fa
 
 const YOUTUBE_API_KEY = "REMOVED-LEAKED-KEY";
 export const YOUTUBE_URL = `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&regionCode=IN&maxResults=41&key=${YOUTUBE_API_KEY}`;
+
+export const SEARCH_SUGGESTIONS = "http://suggestqueries.google.com/complete/search?client=firefox&ds=yt&q=";

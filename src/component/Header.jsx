@@ -1,15 +1,55 @@
 import { useDispatch } from "react-redux";
-import { SIDE_MENU_BAR, USER_ICON, YOUTUBE_LOGO } from "../utils/constant";
+import { SEARCH_SUGGESTIONS, SIDE_MENU_BAR, USER_ICON, YOUTUBE_LOGO } from "../utils/constant";
 import { toggleEvent } from "../utils/appSlice";
 import { Link } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
 
 const Header = () => {
-
+    const [searchQuery, setSearchQuery] = useState("");
+    const [showSuggestions, setShowSuggestions] = useState(false);
     const dispatch = useDispatch();
+    const [getSearchSuggestions, setGetSearchSuggestions] = useState([]);
+    const searchRef = useRef(null);
 
     const HandleSideBarMenu = () => {
         dispatch(toggleEvent());
     }
+
+    useEffect(() => {
+        if (searchQuery.trim()) {
+            const debounceTimer = setTimeout(() => {
+                fetchSearchSuggestions();
+            }, 200);
+            return () => clearTimeout(debounceTimer);
+        } else {
+            setGetSearchSuggestions([]);
+        }
+    },[searchQuery]);
+
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (searchRef.current && !searchRef.current.contains(e.target)) {
+                setShowSuggestions(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
+
+    const fetchSearchSuggestions = async () => {
+        try {
+            const response = await fetch(SEARCH_SUGGESTIONS + encodeURIComponent(searchQuery));
+            const data = await response.json();
+            setGetSearchSuggestions(data);
+        } catch (error) {
+            console.error("Error fetching search suggestions:", error);
+        }
+    }
+
+    const handleSuggestionClick = (suggestion) => {
+        setSearchQuery(suggestion);
+        setShowSuggestions(false);
+    };
 
     return (
         <div className="flex items-center justify-between px-4 py-2 shadow-md sticky top-0 bg-white z-50">
@@ -22,15 +62,34 @@ const Header = () => {
                     <span className="text-xl font-semibold tracking-tight">YouTube</span>
                 </Link>
             </div>
-            <div className="flex items-center w-1/2">
+            <div className="relative flex items-center w-1/2" ref={searchRef}>
                 <input
                     className="w-full px-4 py-2 border border-gray-300 rounded-l-full outline-none focus:border-blue-500"
                     type="text"
                     placeholder="Search"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onFocus={() => setShowSuggestions(true)}
                 />
                 <button className="px-5 py-2 bg-gray-100 border border-l-0 border-gray-300 rounded-r-full hover:bg-gray-200 cursor-pointer">
                     🔍
                 </button>
+                {showSuggestions && getSearchSuggestions.length > 0 && getSearchSuggestions[1]?.length > 0 && (
+                    <div className="absolute top-full left-0 right-12 mt-1 bg-white border border-gray-200 rounded-xl shadow-lg z-50 py-2 overflow-hidden">
+                        {getSearchSuggestions[1].map((suggestion, index) => (
+                            <div
+                                key={index}
+                                className="flex items-center gap-3 px-4 py-1.5 hover:bg-gray-100 cursor-pointer"
+                                onClick={() => handleSuggestionClick(suggestion)}
+                            >
+                                <svg className="w-4 h-4 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                </svg>
+                                <span className="text-sm text-gray-800 truncate">{suggestion}</span>
+                            </div>
+                        ))}
+                    </div>
+                )}
             </div>
             <div>
                 <img className="w-8 h-8 rounded-full cursor-pointer" src={USER_ICON} alt="user-icon" />
