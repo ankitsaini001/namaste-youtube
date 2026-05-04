@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
 import { SIDE_MENU_BAR, USER_ICON, YOUTUBE_LOGO } from "../utils/constant";
 import { toggleEvent } from "../utils/appSlice";
+import { Link } from "react-router-dom";
 
 const Header = () => {
 
@@ -16,10 +17,10 @@ const Header = () => {
                 <button className="p-2 hover:bg-gray-100 rounded-full cursor-pointer" onClick={() => HandleSideBarMenu()}>
                     <img className="w-6" src={SIDE_MENU_BAR} alt="side-menu" />
                 </button>
-                <a href="/" className="flex items-center gap-1">
+                <Link to="/" className="flex items-center gap-1">
                     <img className="w-8" src={YOUTUBE_LOGO} alt="youtube" />
                     <span className="text-xl font-semibold tracking-tight">YouTube</span>
-                </a>
+                </Link>
             </div>
             <div className="flex items-center w-1/2">
                 <input

@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const SiderBar = () => {
 
@@ -14,50 +15,98 @@ const SiderBar = () => {
     <div className="w-56 h-[calc(100vh-56px)] overflow-y-auto fixed top-14 left-0 bg-white px-2 py-3 z-50">
       {/* Main Links */}
       <div className="border-b border-gray-200 pb-3 mb-3">
-        <SidebarItem icon="🏠" label="Home" active />
-        <SidebarItem icon="🎬" label="Shorts" />
-        <SidebarItem icon="📺" label="Subscriptions" />
-        <SidebarItem icon="🎵" label="YouTube Music" />
+        <Link to="/">
+          <SidebarItem icon="🏠" label="Home" active />
+        </Link>
+        <Link to="/shorts">
+          <SidebarItem icon="🎬" label="Shorts" />
+        </Link>
+        <Link to="/subscriptions">
+          <SidebarItem icon="📺" label="Subscriptions" />
+        </Link>
+        <Link to="/music">
+          <SidebarItem icon="🎵" label="YouTube Music" />
+        </Link>
       </div>
 
       {/* You Section */}
       <div className="border-b border-gray-200 pb-3 mb-3">
         <h3 className="text-base font-medium px-3 mb-1">You</h3>
-        <SidebarItem icon="📁" label="Your channel" />
-        <SidebarItem icon="⏱️" label="History" />
-        <SidebarItem icon="🎥" label="Your videos" />
-        <SidebarItem icon="⏰" label="Watch later" />
-        <SidebarItem icon="👍" label="Liked videos" />
+        <Link to="/your-channel">
+          <SidebarItem icon="📁" label="Your channel" />
+        </Link>
+        <Link to="/history">
+          <SidebarItem icon="⏱️" label="History" />
+        </Link>
+        <Link to="/your-videos">
+          <SidebarItem icon="🎥" label="Your videos" />
+        </Link>
+        <Link to="/watch-later">
+          <SidebarItem icon="⏰" label="Watch later" />
+        </Link>
+        <Link to="/liked-videos">
+          <SidebarItem icon="👍" label="Liked videos" />
+        </Link>
       </div>
 
       {/* Subscriptions */}
       <div className="border-b border-gray-200 pb-3 mb-3">
         <h3 className="text-base font-medium px-3 mb-1">Subscriptions</h3>
-        <SidebarItem icon="🔴" label="T-Series" />
-        <SidebarItem icon="🟢" label="MrBeast" />
-        <SidebarItem icon="🟡" label="PewDiePie" />
-        <SidebarItem icon="🔵" label="Cocomelon" />
-        <SidebarItem icon="🟣" label="SET India" />
+        <Link to="/t-series">
+          <SidebarItem icon="🔴" label="T-Series" />
+        </Link>
+        <Link to="/mrbeast">
+          <SidebarItem icon="🟢" label="MrBeast" />
+        </Link>
+        <Link to="/pewdiepie">
+          <SidebarItem icon="🟡" label="PewDiePie" />
+        </Link>
+        <Link to="/cocomelon">
+          <SidebarItem icon="🔵" label="Cocomelon" />
+        </Link>
+        <Link to="/set-india">
+          <SidebarItem icon="🟣" label="SET India" />
+        </Link>
       </div>
 
       {/* Explore */}
       <div className="border-b border-gray-200 pb-3 mb-3">
         <h3 className="text-base font-medium px-3 mb-1">Explore</h3>
-        <SidebarItem icon="🔥" label="Trending" />
-        <SidebarItem icon="🛍️" label="Shopping" />
-        <SidebarItem icon="🎮" label="Gaming" />
-        <SidebarItem icon="📰" label="News" />
-        <SidebarItem icon="⚽" label="Sports" />
-        <SidebarItem icon="💡" label="Learning" />
+        <Link to="/trending">
+          <SidebarItem icon="🔥" label="Trending" />
+        </Link>
+        <Link to="/shopping">
+          <SidebarItem icon="🛍️" label="Shopping" />
+        </Link>
+        <Link to="/gaming">
+          <SidebarItem icon="🎮" label="Gaming" />
+        </Link>
+        <Link to="/news">
+          <SidebarItem icon="📰" label="News" />
+        </Link>
+        <Link to="/sports">
+          <SidebarItem icon="⚽" label="Sports" />
+        </Link>
+        <Link to="/learning">
+          <SidebarItem icon="💡" label="Learning" />
+        </Link>
       </div>
 
       {/* More from YouTube */}
       <div className="pb-3">
         <h3 className="text-base font-medium px-3 mb-1">More from YouTube</h3>
-        <SidebarItem icon="📡" label="YouTube Premium" />
-        <SidebarItem icon="🎬" label="YouTube Studio" />
-        <SidebarItem icon="🎵" label="YouTube Music" />
-        <SidebarItem icon="👶" label="YouTube Kids" />
+        <Link to="/youtube-premium">
+          <SidebarItem icon="📡" label="YouTube Premium" />
+        </Link>
+        <Link to="/youtube-studio">
+          <SidebarItem icon="🎬" label="YouTube Studio" />
+        </Link>
+        <Link to="/youtube-music">
+          <SidebarItem icon="🎵" label="YouTube Music" />
+        </Link>
+        <Link to="/youtube-kids">
+          <SidebarItem icon="👶" label="YouTube Kids" />
+        </Link>
       </div>
     </div>
   );
