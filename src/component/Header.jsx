@@ -1,30 +1,37 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { SEARCH_SUGGESTIONS, SIDE_MENU_BAR, USER_ICON, YOUTUBE_LOGO } from "../utils/constant";
 import { toggleEvent } from "../utils/appSlice";
 import { Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
+import { searchSliceEvent } from "../utils/searchSlice";
 
 const Header = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [showSuggestions, setShowSuggestions] = useState(false);
-    const dispatch = useDispatch();
     const [getSearchSuggestions, setGetSearchSuggestions] = useState([]);
     const searchRef = useRef(null);
+    const dispatch = useDispatch();
 
     const HandleSideBarMenu = () => {
         dispatch(toggleEvent());
     }
 
+    const cache = useSelector((store) => store.search);
+
     useEffect(() => {
         if (searchQuery.trim()) {
             const debounceTimer = setTimeout(() => {
-                fetchSearchSuggestions();
+                if (cache[searchQuery]) {
+                    setGetSearchSuggestions(cache[searchQuery]);
+                } else {
+                    fetchSearchSuggestions();
+                }
             }, 200);
             return () => clearTimeout(debounceTimer);
         } else {
             setGetSearchSuggestions([]);
         }
-    },[searchQuery]);
+    }, [searchQuery]);
 
     useEffect(() => {
         const handleClickOutside = (e) => {
@@ -41,6 +48,9 @@ const Header = () => {
             const response = await fetch(SEARCH_SUGGESTIONS + encodeURIComponent(searchQuery));
             const data = await response.json();
             setGetSearchSuggestions(data);
+
+            // Update Cache the suggestions in Redux store
+            dispatch(searchSliceEvent({ [searchQuery]: data }));
         } catch (error) {
             console.error("Error fetching search suggestions:", error);
         }
