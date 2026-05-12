@@ -12,6 +12,20 @@ const Watch = () => {
             <div className="flex gap-4">
                 <iframe width="1000" height="515" src={`https://www.youtube.com/embed/${videoId}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
                 <div className="w-[34rem] h-[515px] border border-black rounded-lg p-2 overflow-y-auto">
+
+                    <h1 className="text-2xl font-bold">Live Chat</h1>
+                    <LiveChat />
+                    <LiveChat />
+                    <LiveChat />
+                    <LiveChat />
+                    <LiveChat />
+                    <LiveChat />
+                    <LiveChat />
+                    <LiveChat />
+                    <LiveChat />
+                    <LiveChat />
+                    <LiveChat />
+                    <LiveChat />
                     <LiveChat />
                 </div>
             </div>
