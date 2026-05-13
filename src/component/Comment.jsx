@@ -75,16 +75,19 @@ const Comment = () => {
         }
     ];
 
+    // Recursive component — each level of replies renders another SingleComment,
+    // which gives us arbitrarily deep nesting without any extra loop logic.
     const SingleComment = ({ comments }) => {
         return (
             <>
                 {comments.map((comment, index) => (
                     <div key={index} className="ml-4 mt-2 border border-l-gray-700 pl-4">
-                        <img src="https://www.svgrepo.com/show/382106/male-avatar-boy-face-man-user-9.svg" alt="user avatar" 
+                        <img src="https://www.svgrepo.com/show/382106/male-avatar-boy-face-man-user-9.svg" alt="user avatar"
                         className="w-12 h-12"
                         />
                         <p className="font-bold">{comment.name}</p>
                         <p>{comment.comment}</p>
+                        {/* Only recurse when there are replies — base case is an empty array */}
                         {comment.replies.length > 0 && (
                             <SingleComment comments={comment.replies} />
                         )}

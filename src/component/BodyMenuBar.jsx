@@ -8,6 +8,8 @@ const BodyMenuBar = () => {
 
     const listAllMenu = ["All", "Live", "Mixes", "Music", "Gaming", "News", "Sports", "Learning", "Fashion & Beauty", "Comedy", "Entertainment", "Podcast", "Autos & Vehicles", "Travel & Events", "Movies", "Anime/Animation", "Action/Adventure"];
 
+    // Show/hide the left and right scroll arrows based on current scroll position.
+    // The -1 tolerance on the right guard avoids a flicker caused by sub-pixel rounding.
     const updateArrows = () => {
         const el = scrollRef.current;
         if (!el) return;
@@ -17,6 +19,7 @@ const BodyMenuBar = () => {
 
     useEffect(() => {
         updateArrows();
+        // Re-evaluate arrow visibility when the viewport is resized (e.g. more pills fit → hide right arrow)
         window.addEventListener("resize", updateArrows);
         return () => window.removeEventListener("resize", updateArrows);
     }, []);

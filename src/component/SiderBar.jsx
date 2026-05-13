@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 const SiderBar = () => {
 
     const sidebarItems = useSelector((store) => store.app.isMenuOpen);
-    
-    // Early return if sidebarItems is not available
+
+    // Sidebar is unmounted entirely when closed — avoids keeping a hidden fixed element in the DOM
     if (!sidebarItems) {
-        return null; // or a loading indicator
+        return null;
     }
 
     

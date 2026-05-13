@@ -9,6 +9,7 @@ const Header = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [showSuggestions, setShowSuggestions] = useState(false);
     const [getSearchSuggestions, setGetSearchSuggestions] = useState([]);
+    // ref used to detect clicks outside the search box and close the dropdown
     const searchRef = useRef(null);
     const dispatch = useDispatch();
 
@@ -16,8 +17,11 @@ const Header = () => {
         dispatch(toggleEvent());
     }
 
+    // Read the entire search cache from Redux so we can check it synchronously before fetching
     const cache = useSelector((store) => store.search);
 
+    // Debounce the API call by 200 ms. If the query is already cached, skip the network request.
+    // The cleanup function cancels the pending timer whenever the query changes mid-typing.
     useEffect(() => {
         if (searchQuery.trim()) {
             const debounceTimer = setTimeout(() => {
@@ -33,6 +37,7 @@ const Header = () => {
         }
     }, [searchQuery]);
 
+    // Close the suggestions dropdown when the user clicks anywhere outside the search container
     useEffect(() => {
         const handleClickOutside = (e) => {
             if (searchRef.current && !searchRef.current.contains(e.target)) {
@@ -48,8 +53,7 @@ const Header = () => {
             const response = await fetch(SEARCH_SUGGESTIONS + encodeURIComponent(searchQuery));
             const data = await response.json();
             setGetSearchSuggestions(data);
-
-            // Update Cache the suggestions in Redux store
+            // Persist results in Redux so the same query never triggers a second network request
             dispatch(searchSliceEvent({ [searchQuery]: data }));
         } catch (error) {
             console.error("Error fetching search suggestions:", error);
@@ -84,6 +88,7 @@ const Header = () => {
                 <button className="px-5 py-2 bg-gray-100 border border-l-0 border-gray-300 rounded-r-full hover:bg-gray-200 cursor-pointer">
                     🔍
                 </button>
+                {/* Google Suggest returns [query, [suggestions]]; index [1] holds the actual list */}
                 {showSuggestions && getSearchSuggestions.length > 0 && getSearchSuggestions[1]?.length > 0 && (
                     <div className="absolute top-full left-0 right-12 mt-1 bg-white border border-gray-200 rounded-xl shadow-lg z-50 py-2 overflow-hidden">
                         {getSearchSuggestions[1].map((suggestion, index) => (

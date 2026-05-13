@@ -1,9 +1,11 @@
+// Converts raw view counts to a compact human-readable form (e.g. 1200000 → "1.2M")
 const formatViewCount = (count) => {
   if (count >= 1000000) return (count / 1000000).toFixed(1) + "M";
   if (count >= 1000) return (count / 1000).toFixed(1) + "K";
   return count;
 };
 
+// Returns a relative label like "3 days ago"; falls through to "Just now" for sub-minute gaps
 const timeAgo = (date) => {
   const seconds = Math.floor((new Date() - new Date(date)) / 1000);
   const intervals = [

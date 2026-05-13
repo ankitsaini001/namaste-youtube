@@ -4,7 +4,10 @@ export const YOUTUBE_LOGO = "https://upload.wikimedia.org/wikipedia/commons/0/09
 
 export const USER_ICON = "https://www.svgrepo.com/show/382106/male-avatar-boy-face-man-user-9.svg";
 
+// API key is kept in .env (REACT_APP_YT_API_KEY) and injected at build time — never hard-code it here
 const YOUTUBE_API_KEY = process.env.REACT_APP_YT_API_KEY;
+// Fetches the 41 most popular videos in India; regionCode=IN keeps results locally relevant
 export const YOUTUBE_URL = `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&regionCode=IN&maxResults=41&key=${YOUTUBE_API_KEY}`;
 
+// client=firefox returns a plain JSON array; the YouTube-specific ds=yt scope narrows results to video titles
 export const SEARCH_SUGGESTIONS = "http://suggestqueries.google.com/complete/search?client=firefox&ds=yt&q=";

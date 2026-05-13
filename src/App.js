@@ -26,6 +26,7 @@ function AppLayout() {
   );
 }
 
+// errorElement catches both 404s and runtime render errors thrown inside AppLayout children
 const appRouter = createBrowserRouter([
   {
     path: "/",
@@ -37,6 +38,7 @@ const appRouter = createBrowserRouter([
         element: <Body />,
       },
       {
+        // videoId is passed as ?v=<id> query param, not a path segment, to mirror the real YouTube URL scheme
         path: "/watch",
         element: <Watch />,
       },

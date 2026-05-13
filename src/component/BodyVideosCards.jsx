@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 const BodyVideosCards = () => {
     const [videos, setVideos] = useState([]);
 
+    // Fetch once on mount; no dependency array value needed because the URL never changes at runtime
     useEffect(() => {
         fetchVideos();
     },[]);
@@ -14,7 +15,6 @@ const BodyVideosCards = () => {
         try {
             const response = await fetch(YOUTUBE_URL);
             const data = await response.json();
-            //console.log(data);
             setVideos(data.items);
         } catch (error) {
             console.error("Error fetching videos:", error);
