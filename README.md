@@ -1,70 +1,122 @@
-# Getting Started with Create React App
+# Namaste YouTube
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A YouTube clone built with React 19, Redux Toolkit, and Tailwind CSS. The app fetches real trending videos from the YouTube Data API v3, supports debounced search suggestions with client-side caching, and includes a video watch page with embedded playback, a simulated live chat panel, and a recursive nested comments section.
+
+## Features
+
+- **Trending Video Feed** — Fetches the top 41 most popular videos in India via the YouTube Data API v3 and renders them in a responsive card grid with formatted view counts and relative timestamps.
+- **Category Filter Bar** — Horizontally scrollable pill-button filter bar (All, Live, Music, Gaming, News, Sports, Learning, and more) with dynamic left/right scroll arrow visibility.
+- **Collapsible Sidebar** — Full-height sidebar with navigation sections (Home, Shorts, Subscriptions, You, Explore, More from YouTube). Toggled by the hamburger menu; state is managed globally via Redux.
+- **Debounced Search with Caching** — Search suggestions are fetched from the Google Suggest API with a 200 ms debounce. Results are cached in the Redux store so repeated queries skip the network request.
+- **Video Watch Page** — Clicking any video navigates to `/watch?v=<videoId>`, which embeds the video via an `<iframe>` alongside a simulated live chat panel.
+- **Recursive Nested Comments** — Comment thread component renders arbitrarily deep reply trees using a self-referencing `SingleComment` component.
+- **404 Fallback** — A `NotFound` component is shown for any unmatched route.
+
+## Tech Stack
+
+| Layer | Library / Tool |
+|---|---|
+| UI Framework | React 19 |
+| Styling | Tailwind CSS 3 |
+| State Management | Redux Toolkit 2 + React-Redux 9 |
+| Routing | React Router DOM 7 |
+| Build Tool | Create React App (react-scripts 5) |
+| Video Data | YouTube Data API v3 |
+| Search Suggestions | Google Suggest API |
+
+## Project Structure
+
+```
+src/
+├── App.js                  # Root layout, router definition, Redux Provider
+├── component/
+│   ├── Header.jsx          # Sticky header: logo, search bar, user avatar
+│   ├── SiderBar.jsx        # Collapsible sidebar navigation
+│   ├── BodyMenuBar.jsx     # Scrollable category filter bar
+│   ├── Body.jsx            # Home page shell
+│   ├── BodyVideosCards.jsx # Fetches videos from YouTube API, renders grid
+│   ├── VideoCards.jsx      # Individual video card (thumbnail, title, meta)
+│   ├── Watch.jsx           # Video watch page (iframe + live chat + comments)
+│   ├── LiveChat.jsx        # Simulated live chat message component
+│   ├── Comment.jsx         # Recursive nested comment tree
+│   └── NotFound.jsx        # 404 error page
+└── utils/
+    ├── store.jsx           # Redux store (app + search reducers)
+    ├── appSlice.jsx        # Sidebar open/close toggle state
+    ├── searchSlice.jsx     # Search suggestion cache (query → results map)
+    └── constant.jsx        # API URLs and icon asset URLs
+```
+
+## Architecture Overview
+
+**Redux Store**
+
+```
+store
+├── app.isMenuOpen     → boolean, controls sidebar visibility
+└── search             → { [query]: suggestions[] }, search result cache
+```
+
+**Routing**
+
+```
+/               → Home page (trending video grid)
+/watch?v=<id>   → Video watch page
+*               → NotFound (404)
+```
+
+**Search Flow**
+
+1. User types in the search bar → 200 ms debounce fires.
+2. If the query exists in the Redux cache → render cached suggestions immediately.
+3. Otherwise → fetch from Google Suggest API → store result in Redux cache → render.
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 18+
+- A YouTube Data API v3 key ([get one here](https://console.cloud.google.com/))
+
+### Installation
+
+```bash
+git clone https://github.com/ankitsaini001/namaste-youtube.git
+cd namaste-youtube
+npm install
+```
+
+### Environment Variables
+
+Create a `.env` file in the project root:
+
+```env
+REACT_APP_YT_API_KEY=your_youtube_api_key_here
+```
+
+> The key is injected into the YouTube API URL at build time via `process.env.REACT_APP_YT_API_KEY`.
+
+### Running the App
+
+```bash
+npm start
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+### Building for Production
+
+```bash
+npm run build
+```
+
+The optimised build is output to the `build/` folder.
 
 ## Available Scripts
 
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+| Command | Description |
+|---|---|
+| `npm start` | Start development server on port 3000 |
+| `npm run build` | Create optimised production build |
+| `npm test` | Run tests in interactive watch mode |
+| `npm run eject` | Eject from Create React App (irreversible) |
