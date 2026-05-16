@@ -11,3 +11,5 @@ export const YOUTUBE_URL = `https://youtube.googleapis.com/youtube/v3/videos?par
 
 // client=firefox returns a plain JSON array; the YouTube-specific ds=yt scope narrows results to video titles
 export const SEARCH_SUGGESTIONS = "http://suggestqueries.google.com/complete/search?client=firefox&ds=yt&q=";
+
+export const LIVE_CHAT_MESSAGES_SPLICE = 20;
