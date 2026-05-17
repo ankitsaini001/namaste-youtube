@@ -9,6 +9,7 @@ A YouTube clone built with React 19, Redux Toolkit, and Tailwind CSS. The app fe
 - **Collapsible Sidebar** — Full-height sidebar with navigation sections (Home, Shorts, Subscriptions, You, Explore, More from YouTube). Toggled by the hamburger menu; state is managed globally via Redux.
 - **Debounced Search with Caching** — Search suggestions are fetched from the Google Suggest API with a 200 ms debounce. Results are cached in the Redux store so repeated queries skip the network request.
 - **Video Watch Page** — Clicking any video navigates to `/watch?v=<videoId>`, which embeds the video via an `<iframe>` alongside a simulated live chat panel.
+- **Live Chat Panel** — Auto-generates a new random message every 2 seconds using `setInterval`. Messages are prepended to the top (newest first) via Redux. The message list is capped using `LIVE_CHAT_MESSAGES_SPLICE` to prevent unbounded memory growth. Users can also type and send their own messages which appear as "You".
 - **Recursive Nested Comments** — Comment thread component renders arbitrarily deep reply trees using a self-referencing `SingleComment` component.
 - **404 Fallback** — A `NotFound` component is shown for any unmatched route.
 
@@ -37,14 +38,16 @@ src/
 │   ├── BodyVideosCards.jsx # Fetches videos from YouTube API, renders grid
 │   ├── VideoCards.jsx      # Individual video card (thumbnail, title, meta)
 │   ├── Watch.jsx           # Video watch page (iframe + live chat + comments)
-│   ├── LiveChat.jsx        # Simulated live chat message component
+│   ├── LiveChat.jsx        # Live chat container: auto-messages + user input + Redux dispatch
+│   ├── ChatMessages.jsx    # Individual chat message row (avatar, name, message)
 │   ├── Comment.jsx         # Recursive nested comment tree
 │   └── NotFound.jsx        # 404 error page
 └── utils/
-    ├── store.jsx           # Redux store (app + search reducers)
+    ├── store.jsx           # Redux store (app + search + chat reducers)
     ├── appSlice.jsx        # Sidebar open/close toggle state
     ├── searchSlice.jsx     # Search suggestion cache (query → results map)
-    └── constant.jsx        # API URLs and icon asset URLs
+    ├── chatSlice.jsx       # Live chat messages state, makeid() and generateNames() helpers
+    └── constant.jsx        # API URLs, icon asset URLs, and LIVE_CHAT_MESSAGES_SPLICE cap
 ```
 
 ## Architecture Overview
@@ -54,7 +57,8 @@ src/
 ```
 store
 ├── app.isMenuOpen     → boolean, controls sidebar visibility
-└── search             → { [query]: suggestions[] }, search result cache
+├── search             → { [query]: suggestions[] }, search result cache
+└── chat.messages      → message[], capped list of { name, message } objects
 ```
 
 **Routing**
