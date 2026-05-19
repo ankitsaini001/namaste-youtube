@@ -13,3 +13,16 @@ export const YOUTUBE_URL = `https://youtube.googleapis.com/youtube/v3/videos?par
 export const SEARCH_SUGGESTIONS = "http://suggestqueries.google.com/complete/search?client=firefox&ds=yt&q=";
 
 export const LIVE_CHAT_MESSAGES_SPLICE = 20;
+
+export const CATEGORY_MAP = {
+    "All":               null,
+    "Music":             "10",
+    "Gaming":            "20",
+    "News":              "25",
+    "Sports":            "17",
+    "Learning":          "27",
+    "Comedy":            "23",
+    "Entertainment":     "24",
+    "Travel & Events":   "19",
+    "Autos & Vehicles":  "2",
+};

@@ -1,12 +1,18 @@
 import { useRef, useState, useEffect } from "react";
 import ButtonMenu from "./ButtonMenus";
 
-const BodyMenuBar = () => {
+const BodyMenuBar = ({ onSelect }) => {
     const scrollRef = useRef(null);
     const [showLeft, setShowLeft] = useState(false);
     const [showRight, setShowRight] = useState(true);
+    const [activeMenu, setActiveMenu] = useState("All");
 
     const listAllMenu = ["All", "Live", "Mixes", "Music", "Gaming", "News", "Sports", "Learning", "Fashion & Beauty", "Comedy", "Entertainment", "Podcast", "Autos & Vehicles", "Travel & Events", "Movies", "Anime/Animation", "Action/Adventure"];
+
+    const handleMenuClick = (menu) => {
+        setActiveMenu(menu);
+        onSelect(menu);
+    };
 
     // Show/hide the left and right scroll arrows based on current scroll position.
     // The -1 tolerance on the right guard avoids a flicker caused by sub-pixel rounding.
@@ -48,7 +54,7 @@ const BodyMenuBar = () => {
                 className="flex items-center gap-3 px-8 py-3 overflow-x-auto scrollbar-hide"
             >
                 {listAllMenu.map((menu, index) => (
-                    <ButtonMenu key={index} menubuttons={menu} isActive={index === 0} />
+                    <ButtonMenu key={index} menubuttons={menu} isActive={menu === activeMenu} onClick={() => handleMenuClick(menu)} />
                 ))}
             </div>
             {showRight && (
