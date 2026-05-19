@@ -18,7 +18,7 @@ const LiveChat = () => {
         }));
       },2000);
       return () => clearInterval(timeout);
-    },[]);
+    },[dispatch]);
 
     const sendMessage = () => {
         //console.log("Sending message: ", message);
