@@ -10,7 +10,7 @@ const Watch = () => {
         <div className="p-4">
             {/* Row 1: video + live chat side-by-side */}
             <div className="flex gap-4">
-                <iframe width="1000" height="515" src={`https://www.youtube.com/embed/${videoId}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+                <iframe  className="w-full aspect-video" src={`https://www.youtube.com/embed/${videoId}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
                 <div className="w-[34rem] h-[515px] border border-black rounded-lg overflow-hidden">
                     <LiveChat />
                 </div>
