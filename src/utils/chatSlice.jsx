@@ -3,17 +3,17 @@ import { LIVE_CHAT_MESSAGES_SPLICE } from "./constant";
 
 // random string generator for message id
 export const makeid = (length) => {
-    var result           = '';
-    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    var charactersLength = characters.length;
-    for ( var i = 0; i < length; i++ ) {
+    let result           = '';
+    let characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let charactersLength = characters.length;
+    for ( let i = 0; i < length; i++ ) {
         result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
     return result;
 }
 
 // random name generator for message sender
-var nameList = [
+let nameList = [
   'Time', 'Past', 'Future', 'Dev',
   'Fly', 'Flying', 'Soar', 'Soaring', 'Power', 'Falling',
   'Fall', 'Jump', 'Cliff', 'Mountain', 'Rend', 'Red', 'Blue',
@@ -37,7 +37,7 @@ var nameList = [
   'Legacy', 'Sharp', 'Dead', 'Mew', 'Chuckle', 'Bubba', 'Bubble', 'Sandwich', 'Smasher', 'Extreme', 'Multi', 'Universe', 'Ultimate', 'Death', 'Ready', 'Monkey', 'Elevator', 'Wrench', 'Grease', 'Head', 'Theme', 'Grand', 'Cool', 'Kid', 'Boy', 'Girl', 'Vortex', 'Paradox'
 ];
 export const generateNames = () => {
-  var finalName = nameList[Math.floor(Math.random() * nameList.length)];
+  let finalName = nameList[Math.floor(Math.random() * nameList.length)];
   return finalName;};
 
 const chatSlice = createSlice({
