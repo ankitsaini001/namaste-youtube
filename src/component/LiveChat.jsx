@@ -5,14 +5,14 @@ import { useEffect, useState } from "react";
 
 const LiveChat = () => {
     const [message, setMessage] = useState("");
-    const data = useDispatch();
+    const dispatch = useDispatch();
     const chatMessages = useSelector((store) => store.chat.messages);
     //console.log(chatMessages);
     
     useEffect(() =>{
       let timeout = setInterval(() => {
         //console.log("This is a new chat message");
-        data(addMessageEvent({
+        dispatch(addMessageEvent({
             name: generateNames(),
             message: makeid(20) +  "🚀"
         }));
@@ -22,7 +22,7 @@ const LiveChat = () => {
 
     const sendMessage = () => {
         //console.log("Sending message: ", message);
-        data(addMessageEvent({
+        dispatch(addMessageEvent({
             name: "You",
             message: message
         }));
